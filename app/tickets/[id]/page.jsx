@@ -21,7 +21,7 @@ async function getTicket(id) {
     "https://json-api.uz/api/project/dojo-tickets/tickets/" + id,
     {
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     }
   );

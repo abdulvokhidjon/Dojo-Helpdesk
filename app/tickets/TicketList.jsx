@@ -4,7 +4,7 @@ async function getTickets() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await fetch("https://json-api.uz/api/project/dojo-tickets/tickets", {
     next: {
-      revalidate: 30, // use 0 to opt out of using cache
+      revalidate: 10, // use 0 to opt out of using cache
     },
   });
   return res.json();
