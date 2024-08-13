@@ -3,27 +3,23 @@ import { notFound } from "next/navigation";
 export const dynamicParams = true; // default val = true
 
 export async function generateStaticParams() {
-  const res = await fetch(
-    "https://json-api.uz/api/project/dojo-tickets/tickets/"
-  );
+  const res = await fetch("http://localhost:4000/tickets");
 
   const tickets = await res.json();
 
-  return tickets.data.map((ticket) => ({
+  return tickets.map((ticket) => ({
     id: ticket.id,
   }));
 }
 
 async function getTicket(id) {
+  // imitate delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const res = await fetch(
-    "https://json-api.uz/api/project/dojo-tickets/tickets/" + id,
-    {
-      next: {
-        revalidate: 10,
-      },
-    }
-  );
+  const res = await fetch("http://localhost:4000/tickets/" + id, {
+    next: {
+      revalidate: 0,
+    },
+  });
   if (!res.ok) {
     notFound();
   }

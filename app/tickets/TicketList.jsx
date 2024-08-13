@@ -2,14 +2,11 @@ import Link from "next/link";
 async function getTickets() {
   // imitate delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const res = await fetch(
-    "https://json-api.uz/api/project/dojo-tickets/tickets",
-    {
-      next: {
-        revalidate: 10, 
-      },
-    }
-  );
+  const res = await fetch("http://localhost:4000/tickets", {
+    next: {
+      revalidate: 0, // use 0 to opt out of using cache
+    },
+  });
   return res.json();
 }
 export default async function TicketList() {
@@ -17,7 +14,7 @@ export default async function TicketList() {
 
   return (
     <>
-      {tickets.data.map((ticket) => (
+      {tickets.map((ticket) => (
         <div key={ticket.id} className="card my-5">
           <Link href={`/tickets/${ticket.id}`}>
             <h3>{ticket.title}</h3>
