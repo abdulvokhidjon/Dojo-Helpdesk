@@ -18,7 +18,7 @@ export default function CreateForm() {
       priority,
       user_email: "mario@netninja.dev",
     };
-    const res = await fetch("http://localhost:4000/tickets", {
+    const res = await fetch("https://json-api.uz/api/project/dojo-tickets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
