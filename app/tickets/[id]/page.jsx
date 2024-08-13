@@ -4,12 +4,12 @@ export const dynamicParams = true; // default val = true
 
 export async function generateStaticParams() {
   const res = await fetch(
-    "https://json-api.uz/api/project/dojo-tickets/tickets"
+    "https://json-api.uz/api/project/dojo-tickets/tickets/"
   );
 
   const tickets = await res.json();
 
-  return tickets.map((ticket) => ({
+  return tickets.data.map((ticket) => ({
     id: ticket.id,
   }));
 }
@@ -21,7 +21,7 @@ async function getTicket(id) {
     "https://json-api.uz/api/project/dojo-tickets/tickets/" + id,
     {
       next: {
-        revalidate: 10,
+        revalidate: 60,
       },
     }
   );
