@@ -16,15 +16,18 @@ export default function CreateForm() {
       title,
       body,
       priority,
-      user_email: "mario@netninja.dev",
+      user_email: "fn23@netninja.dev",
     };
-    const res = await fetch("http://localhost:4000/tickets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ticket),
-    });
+    const res = await fetch(
+      "https://json-api.uz/api/project/dojo-tickets/tickets",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ticket),
+      }
+    );
     if (res.status === 201) {
       router.refresh();
       router.push("/tickets");

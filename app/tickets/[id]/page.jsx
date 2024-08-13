@@ -1,34 +1,43 @@
 import { notFound } from "next/navigation";
 
-export const dynamicParams = true; // default val = true
+export const dynamicParams = true; // default value = true
 
 export async function generateStaticParams() {
-  const res = await fetch("http://localhost:4000/tickets");
+  const res = await fetch(
+    "https://json-api.uz/api/project/dojo-tickets/tickets"
+  );
 
   const tickets = await res.json();
 
-  return tickets.map((ticket) => ({
-    id: ticket.id,
+  // Ensure id is a string
+  return tickets.data.map((ticket) => ({
+    id: String(ticket.id),
   }));
 }
 
 async function getTicket(id) {
-  // imitate delay
+  // Imitate delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const res = await fetch("http://localhost:4000/tickets/" + id, {
-    next: {
-      revalidate: 0,
-    },
-  });
+
+  const res = await fetch(
+    `https://json-api.uz/api/project/dojo-tickets/tickets/${id}`,
+    {
+      next: {
+        revalidate: 0,
+      },
+    }
+  );
+
   if (!res.ok) {
     notFound();
   }
+
   return res.json();
 }
 
 export default async function TicketDetails({ params }) {
-  //   const id = params.id;
-  const ticket = await getTicket(params.id);
+  const id = params.id; // Ensure id is a string
+  const ticket = await getTicket(id);
 
   return (
     <main>
