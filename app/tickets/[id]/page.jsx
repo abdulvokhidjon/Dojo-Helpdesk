@@ -15,13 +15,12 @@ export async function generateStaticParams() {
 }
 
 async function getTicket(id) {
-  // imitate delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await fetch(
     "https://json-api.uz/api/project/dojo-tickets/tickets/" + id,
     {
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     }
   );
